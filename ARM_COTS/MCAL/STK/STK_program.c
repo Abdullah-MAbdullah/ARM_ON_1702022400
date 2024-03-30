@@ -17,6 +17,8 @@
  *                                                        - MSTK_voidSetSingleInterval
  *                                                        - MSTK_voidSetPeriodicInterval
  *                                                        - SysTick_Handler
+ 
+ * v2.1		  30 Mar, 2024	Abdullah M. Abdullah		  Fix the build error
 *********************************************/
 #include "../include/STD_TYPES.h"
 #include "../include/BIT_MATH.h"
@@ -25,7 +27,7 @@
 #include "../include/STK_private.h"
 #include "../include/STK_config.h"
 
-static void (pNotificationFunction)(void) = NULL;
+static void (*pNotificationFunction)(void) = NULLPTR;
 static u8IntervalTypeFlag = SINGLE_INTERVAL;
 
 void MSTK_voidInit(void)
@@ -114,7 +116,7 @@ void SysTick_Handler(void)
         STK -> VAL = 0;
         CLR_BIT(STK->CTRL, 0);
     }
-    if(pNotificationFunction != NULL)
+    if(pNotificationFunction != NULLPTR)
     {
         pNotificationFunction();
     }

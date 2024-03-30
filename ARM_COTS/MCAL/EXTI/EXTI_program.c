@@ -1,7 +1,7 @@
 /*********************************************
  * Author:				Abdullah M. Abdullah
  * Creation Data:		29 Mar, 2024
- * Version:				v1.0
+ * Version:				v1.1
  * Compiler:			GNU ARM-GCC
  * Controller:			STM32F401CCU6
  * Layer:				MCAL
@@ -9,6 +9,7 @@
 /*********************************************
  * Version	  Date				  Author				  Description
  * v1.0		  29 Mar, 2024	Abdullah M. Abdullah		  Initial Creation
+ * v1.1		  30 Mar, 2024	Abdullah M. Abdullah		  Fix the build error
 *********************************************/
 #include "../include/STD_TYPES.h"
 #include "../include/BIT_MATH.h"
@@ -98,9 +99,9 @@ void EXTI0_IRQHandler(void)
 // ISR For EXTI1
 void EXTI1_IRQHandler(void)
 {
-    if(EXTI1_pNotificationFunction != NULLPTR)
+    if(EXTI_pNotificationFunction[1] != NULLPTR)
     {
-        EXTI1_pNotificationFunction();
+    	EXTI_pNotificationFunction[1]();
     }
     else
     {

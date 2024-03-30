@@ -1,7 +1,7 @@
 /*********************************************
  * Author:				Abdullah M. Abdullah
  * Creation Data:		16 Mar, 2024
- * Version:				v1.0
+ * Version:				v1.1
  * Compiler:			GNU ARM-GCC
  * Controller:			STM32F401CCU6
  * Layer:				MCAL
@@ -9,6 +9,7 @@
 /*********************************************
  * Version	  Date				  Author				  Description
  * v1.0		  16 Mar, 2024	Abdullah M. Abdullah		  Initial Creation
+ * v1.1		  30 Mar, 2024	Abdullah M. Abdullah		  Fix the build error
 *********************************************/
 #include "../include/STD_TYPES.h"
 #include "../include/BIT_MATH.h"
@@ -91,5 +92,5 @@ u8 MNVIC_u8GetActiveFlag(u8 Copy_u8PeripheralID)
 
 void MNVIC_voidSetPeripheralPriority(u8 Copy_u8PeripheralID, u8 Copy_u8Priority)
 {
-    MNVIC -> IP[Copy_u8PeripheralID] = (Copy_u8Priority << 4);
+	NVIC -> IP[Copy_u8PeripheralID] = (Copy_u8Priority << 4);
 }

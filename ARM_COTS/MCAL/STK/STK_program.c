@@ -1,7 +1,7 @@
 /*********************************************
  * Author:				Abdullah M. Abdullah
  * Creation Data:		02 Mar, 2024
- * Version:				v2.0
+ * Version:				v3.0
  * Compiler:			GNU ARM-GCC
  * Controller:			STM32F401CCU6
  * Layer:				MCAL
@@ -19,6 +19,10 @@
  *                                                        - SysTick_Handler
  
  * v2.1		  30 Mar, 2024	Abdullah M. Abdullah		  Fix the build error
+ 
+ * v3.0		  30 Mar, 2024	Abdullah M. Abdullah		  Add New APIs 
+ *                                                        - MSTK_voidSTKEnable
+ *                                                        - MSTK_voidSTKDisable
 *********************************************/
 #include "../include/STD_TYPES.h"
 #include "../include/BIT_MATH.h"
@@ -87,6 +91,16 @@ u32 MSTK_u32GetElapsedTime(void)
 void MSTK_voidResetTimer(void)
 {
     STK -> VAL = 0;
+}
+
+void MSTK_voidSTKEnable(void)
+{
+	SET_BIT(STK->CTRL, 0);
+}
+
+void MSTK_voidSTKDisable(void)
+{
+	CLR_BIT(STK->CTRL, 0);
 }
 
 void MSTK_voidSetPreloadValue(u32 Copy_u32PreloadValue)

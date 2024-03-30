@@ -1,7 +1,7 @@
 /*********************************************
  * Author:				Abdullah M. Abdullah
  * Creation Data:		02 Mar, 2024
- * Version:				v1.0
+ * Version:				v2.0
  * Compiler:			GNU ARM-GCC
  * Controller:			STM32F401CCU6
  * Layer:				MCAL
@@ -9,6 +9,14 @@
 /*********************************************
  * Version	  Date				  Author				  Description
  * v1.0		  02 Mar, 2024	Abdullah M. Abdullah		  Initial Creation
+ * v2.0		  30 Mar, 2024	Abdullah M. Abdullah		  Add New APIs 
+ *                                                        - MSTK_u32GetRemainingTime
+ *                                                        - MSTK_u32GetElapsedTime
+ *                                                        - MSTK_voidResetTimer
+ *                                                        - MSTK_voidSetPreloadValue
+ *                                                        - MSTK_voidSetSingleInterval
+ *                                                        - MSTK_voidSetPeriodicInterval
+ *                                                        - SysTick_Handler
 *********************************************/
 #include "../include/STD_TYPES.h"
 #include "../include/BIT_MATH.h"
@@ -16,6 +24,9 @@
 #include "../include/STK_interface.h"
 #include "../include/STK_private.h"
 #include "../include/STK_config.h"
+
+static void (pNotificationFunction)(void) = NULL;
+static u8IntervalTypeFlag = SINGLE_INTERVAL;
 
 void MSTK_voidInit(void)
 {
@@ -55,4 +66,58 @@ void MSTK_voidSetBusyWait(u32 Copy_u32Ticks)
     while(GET_BIT(STK->CTRL, 16) == 0);
     // Flag Clearance
     STK -> VAL = 0;
+}
+
+u32 MSTK_u32GetRemainingTime(void)
+{
+    u32 Local_u32RemainingTime;
+    Local_u32RemainingTime = STK -> VAL;
+    return Local_u32RemainingTime;
+}
+
+u32 MSTK_u32GetElapsedTime(void)
+{
+    u32 Local_u32ElapsedTime;
+    Local_u32ElapsedTime =  STK -> LOAD - STK -> VAL;
+    return Local_u32ElapsedTime;
+}
+
+void MSTK_voidResetTimer(void)
+{
+    STK -> VAL = 0;
+}
+
+void MSTK_voidSetPreloadValue(u32 Copy_u32PreloadValue)
+{
+    STK -> LOAD = Copy_u32PreloadValue;
+}
+
+void MSTK_voidSetSingleInterval(void (*CallBackFunction) (void))
+{
+    pNotificationFunction = CallBackFunction;
+    u8IntervalTypeFlag = SINGLE_INTERVAL;
+}
+
+void MSTK_voidSetPeriodicInterval(void (*CallBackFunction) (void))
+{
+    pNotificationFunction = CallBackFunction;
+    u8IntervalTypeFlag = PERIODIC_INTERVAL;
+}
+
+void SysTick_Handler(void)
+{
+    u8 LocalTempVar = 0;
+    if(u8IntervalTypeFlag == SINGLE_INTERVAL)
+    {
+        // Disable Timer
+        STK -> LOAD = 0;
+        STK -> VAL = 0;
+        CLR_BIT(STK->CTRL, 0);
+    }
+    if(pNotificationFunction != NULL)
+    {
+        pNotificationFunction();
+    }
+    // Flag Clearance
+    LocalTempVar = GET_BIT(STK -> CTRL, 16);
 }

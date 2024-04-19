@@ -1,7 +1,7 @@
 /*********************************************
  * Author:				Abdullah M. Abdullah
  * Creation Data:		23 Feb, 2024
- * Version:				v1.0
+ * Version:				v2.0
  * Compiler:			GNU ARM-GCC
  * Controller:			STM32F401CCU6
  * Layer:				MCAL
@@ -9,6 +9,7 @@
 /*********************************************
  * Version	  Date				  Author				  Description
  * v1.0		  23 Feb, 2024	Abdullah M. Abdullah		  Initial Creation
+ * v2.0		  19 Apr, 2024	Abdullah M. Abdullah		  Adding a new API to set the Alternative functions
 *********************************************/
 #ifndef GPIO_INTERFACE_H
 #define GPIO_INTERFACE_H
@@ -54,5 +55,6 @@ void MGPIO_voidSetPinMode(u8 Copy_u8PortName, u8 Copy_u8PinNumber, u8 Copy_u8Pin
 void MGPIO_voidSetPinOutputType(u8 Copy_u8PortName, u8 Copy_u8PinNumber, u8 Copy_u8PinOutputType);
 void MGPIO_voidSetPinOutputSpeed(u8 Copy_u8PortName, u8 Copy_u8PinNumber, u8 Copy_u8PinSpeed);
 void MGPIO_voidSetPinValue(u8 Copy_u8PortName, u8 Copy_u8PinNumber, u8 Copy_u8PinValue);
+void MGPIO_voidSetAlternativeFunction(u8 Copy_u8PortName, u8 Copy_u8PinNumber, u8 Copy_u8AlternativeFunction);
 
 #endif

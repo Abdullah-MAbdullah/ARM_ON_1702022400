@@ -1,7 +1,7 @@
 /*********************************************
  * Author:				Abdullah M. Abdullah
  * Creation Data:		23 Feb, 2024
- * Version:				v2.0
+ * Version:				v3.0
  * Compiler:			GNU ARM-GCC
  * Controller:			STM32F401CCU6
  * Layer:				MCAL
@@ -10,6 +10,7 @@
  * Version	  Date				  Author				  Description
  * v1.0		  23 Feb, 2024	Abdullah M. Abdullah		  Initial Creation
  * v2.0		  01 Mar, 2024	Abdullah M. Abdullah		  Adding Some New APIs
+ * v3.0		  19 Apr, 2024	Abdullah M. Abdullah		  Adding the Alternative function API
 *********************************************/
 #include "../include/STD_TYPES.h"
 #include "../include/BIT_MATH.h"
@@ -125,3 +126,47 @@ void MGPIO_voidSetPinValue(u8 Copy_u8PortName, u8 Copy_u8PinNumber, u8 Copy_u8Pi
 	}
 }
 
+/**
+ * @brief A Function to set the alternative function for a pin
+ * 
+ * @param Copy_u8PortName: GPIO_PORTA, GPIO_PORTB, GPIO_PORTC
+ * @param Copy_u8PinNumber: GPIO_PIN0, GPIO_PIN1, ..., GPIO_PIN15 
+ * @param Copy_u8AlternativeFunction: GPIO_AF00, GPIO_AF01, ..., GPIO_AF15
+ */
+void MGPIO_voidSetAlternativeFunction(u8 Copy_u8PortName, u8 Copy_u8PinNumber, u8 Copy_u8AlternativeFunction)
+{
+	switch(Copy_u8PortName)
+	{
+		case GPIO_PORTA:
+			// Check for the pin part
+			if(Copy_u8PinNumber <= GPIO_PIN7 && Copy_u8PinNumber >= GPIO_PIN0)
+			{
+				// Clear the 4 bits associated for that pin (Bit Masking)
+				GPIOA_AFRL &= ~(AF_MASK << (Copy_u8PinNumber * AF_BITS_OFFSET));
+				// Set the Alternative function number in the bits
+				GPIOA_AFRL |= (Copy_u8AlternativeFunction << (Copy_u8PinNumber * AF_BITS_OFFSET));
+			}
+			else if(Copy_u8PinNumber <= GPIO_PIN15 && Copy_u8PinNumber >= GPIO_PIN8)
+			{
+				// Clear the 4 bits associated for that pin (Bit Masking)
+				GPIOA_AFRH &= ~(AF_MASK << ((Copy_u8PinNumber-AF_HIGH_BITS_OFFSET) * AF_BITS_OFFSET));
+				// Set the Alternative function number in the bits
+				GPIOA_AFRH |= (Copy_u8AlternativeFunction << ((Copy_u8PinNumber-AF_HIGH_BITS_OFFSET) * AF_BITS_OFFSET));
+			}
+			else
+			{
+				// Error
+			}
+		break;
+		
+		case GPIO_PORTB:
+		break;
+
+		case GPIO_PORTC:
+		break;
+
+		default:
+			// Error
+		break;
+	}
+}

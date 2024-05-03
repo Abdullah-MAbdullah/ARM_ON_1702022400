@@ -1,0 +1,33 @@
+10:41:27 **** Incremental Build of configuration Debug for project Hello_TFT ****
+make all 
+Building file: ../src/main.c
+Invoking: Cross ARM GNU C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Og -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -ffreestanding -fno-move-loop-invariants -Wall -Wextra  -g3 -DDEBUG -DUSE_FULL_ASSERT -DTRACE -DOS_USE_TRACE_SEMIHOSTING_DEBUG -DSTM32F401xC -DUSE_HAL_DRIVER -DHSE_VALUE=25000000 -I"../include" -I"../system/include" -I"../system/include/cmsis" -I"../system/include/stm32f4-hal" -std=gnu11 -MMD -MP -MF"src/main.d" -MT"src/main.o" -c -o "src/main.o" "../src/main.c"
+../src/main.c: In function 'main':
+../src/main.c:35:25: warning: passing argument 1 of 'HTFT_voidDisplayImage' from incompatible pointer type [-Wincompatible-pointer-types]
+   HTFT_voidDisplayImage(&Image);
+                         ^
+In file included from ../src/main.c:9:0:
+../src/../include/TFT_interface.h:19:6: note: expected 'u16 * {aka short unsigned int *}' but argument is of type 'const u16 (*)[20480] {aka const short unsigned int (*)[20480]}'
+ void HTFT_voidDisplayImage(u16 * Copy_pu8Image);
+      ^~~~~~~~~~~~~~~~~~~~~
+Finished building: ../src/main.c
+ 
+Building target: Hello_TFT.elf
+Invoking: Cross ARM GNU C++ Linker
+arm-none-eabi-g++ -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Og -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -ffreestanding -fno-move-loop-invariants -Wall -Wextra  -g3 -T mem.ld -T libs.ld -T sections.ld -nostartfiles -Xlinker --gc-sections -L"../ldscripts" -Wl,-Map,"Hello_TFT.map" --specs=nano.specs -o "Hello_TFT.elf"  ./system/src/stm32f4-hal/stm32f4xx_hal.o ./system/src/stm32f4-hal/stm32f4xx_hal_cortex.o ./system/src/stm32f4-hal/stm32f4xx_hal_dfsdm.o ./system/src/stm32f4-hal/stm32f4xx_hal_flash.o ./system/src/stm32f4-hal/stm32f4xx_hal_gpio.o ./system/src/stm32f4-hal/stm32f4xx_hal_iwdg.o ./system/src/stm32f4-hal/stm32f4xx_hal_pwr.o ./system/src/stm32f4-hal/stm32f4xx_hal_rcc.o  ./system/src/newlib/_cxx.o ./system/src/newlib/_exit.o ./system/src/newlib/_sbrk.o ./system/src/newlib/_startup.o ./system/src/newlib/_syscalls.o ./system/src/newlib/assert.o  ./system/src/diag/Trace.o ./system/src/diag/trace_impl.o  ./system/src/cortexm/_initialize_hardware.o ./system/src/cortexm/_reset_hardware.o ./system/src/cortexm/exception_handlers.o  ./system/src/cmsis/system_stm32f4xx.o ./system/src/cmsis/vectors_stm32f401xc.o  ./src/GPIO_program.o ./src/RCC_program.o ./src/SPI_program.o ./src/STK_program.o ./src/TFT_program.o ./src/_initialize_hardware.o ./src/main.o ./src/stm32f4xx_hal_msp.o   
+Finished building target: Hello_TFT.elf
+ 
+Invoking: Cross ARM GNU Create Flash Image
+arm-none-eabi-objcopy -O ihex "Hello_TFT.elf"  "Hello_TFT.hex"
+Finished building: Hello_TFT.hex
+ 
+Invoking: Cross ARM GNU Print Size
+arm-none-eabi-size --format=berkeley "Hello_TFT.elf"
+   text	   data	    bss	    dec	    hex	filename
+  49035	    160	    424	  49619	   c1d3	Hello_TFT.elf
+Finished building: Hello_TFT.siz
+ 
+
+10:41:28 Build Finished (took 1s.467ms)
+

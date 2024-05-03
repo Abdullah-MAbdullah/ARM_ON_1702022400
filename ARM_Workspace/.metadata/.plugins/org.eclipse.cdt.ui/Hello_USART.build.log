@@ -1,0 +1,11 @@
+00:43:27 **** Incremental Build of configuration Debug for project Hello_USART ****
+make all 
+Invoking: Cross ARM GNU Print Size
+arm-none-eabi-size --format=berkeley "Hello_USART.elf"
+   text	   data	    bss	    dec	    hex	filename
+   7627	    160	    416	   8203	   200b	Hello_USART.elf
+Finished building: Hello_USART.siz
+ 
+
+00:43:28 Build Finished (took 443ms)
+

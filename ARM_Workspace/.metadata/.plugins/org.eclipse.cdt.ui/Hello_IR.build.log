@@ -1,0 +1,11 @@
+13:40:23 **** Incremental Build of configuration Debug for project Hello_IR ****
+make all 
+Invoking: Cross ARM GNU Print Size
+arm-none-eabi-size --format=berkeley "Hello_IR.elf"
+   text	   data	    bss	    dec	    hex	filename
+   8363	    160	    892	   9415	   24c7	Hello_IR.elf
+Finished building: Hello_IR.siz
+ 
+
+13:40:23 Build Finished (took 443ms)
+

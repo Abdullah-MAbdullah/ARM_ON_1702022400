@@ -1,0 +1,18 @@
+#include "../include/BIT_MATH.h"
+#include "../include/STD_TYPES.h"
+
+#include "../include/GPIO_interface.h"
+#include "../include/RCC_interface.h"
+#include "../include/USART_interface.h"
+
+void main(void)
+{
+	RCC_voidInit();
+
+	MUSART1_voidInit();
+	u8 ReceivedData;
+	while(1)
+	{
+		MUSART1_voidReceiveDataSynchronous()
+	}
+}

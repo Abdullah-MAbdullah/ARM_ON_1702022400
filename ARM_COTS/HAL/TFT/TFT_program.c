@@ -21,8 +21,6 @@
 #include "../include/TFT_private.h"
 #include "../include/TFT_config.h"
 
-
-
 void HTFT_voidInit(void)
 {
     // Set A0 Of TFT To be Output Pin
@@ -61,7 +59,7 @@ static void voidSendCommand(u8 Copy_u8Command)
 void HTFT_voidSendData(u8 Copy_u8Data)
 {
     u8 Local_u8Dummy;
-    // Set A0 Pin To Be Low For Command
+    // Set A0 Pin To Be Low For Data
     MGPIO_voidSetPinValue(HTFT_A0_PORT_PIN, GPIO_PIN_HIGH);
     Local_u8Dummy = MSPI1_u8TrancieveSynchronous(Copy_u8Data);
 }
@@ -85,18 +83,18 @@ void HTFT_voidSetWindow(u8 Copy_u8X0, u8 Copy_u8X1, u8 Copy_u8Y0, u8 Copy_u8Y1)
 
 void HTFT_voidDisplayImage(u16 * Copy_pu8Image)
 {
-    u8 Local_u8LoopCounter = 0;
+    u16 Local_u16LoopCounter = 0;
     u8 Local_u8Data;
     HTFT_voidSetWindow(0, 127, 0, 159);
     // Send Write RAM Command
     voidSendCommand(RAM_WR_CMD);
-    for(Local_u8LoopCounter = 0; Local_u8LoopCounter < 20480; Local_u8LoopCounter++)
+    for(Local_u16LoopCounter = 0; Local_u16LoopCounter < 20480; Local_u16LoopCounter++)
     {
         // Send MSB First
-        Local_u8Data = (u8)(Copy_pu8Image[Local_u8LoopCounter] >> 8);
+        Local_u8Data = (u8)(Copy_pu8Image[Local_u16LoopCounter] >> 8);
         HTFT_voidSendData(Local_u8Data);
         // Send LSB Then
-        Local_u8Data = (u8)Copy_pu8Image[Local_u8LoopCounter];
+        Local_u8Data = (u8)Copy_pu8Image[Local_u16LoopCounter];
         HTFT_voidSendData(Local_u8Data);
     }
 }
